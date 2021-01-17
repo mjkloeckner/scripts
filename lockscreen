@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#i3lock --color=000000
+
+betterlockscreen -l dim

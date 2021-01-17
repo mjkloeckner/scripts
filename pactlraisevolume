@@ -1,0 +1,8 @@
+#!/bin/bash
+
+AMOUNT_TO_INCREASE=$1
+
+CURRENT_VOLUME=$(pamixer --get-volume)
+MAX_VOLUME=$((100 - $AMOUNT_TO_INCREASE))
+
+(($CURRENT_VOLUME<=$MAX_VOLUME)) && $(pactl set-sink-volume @DEFAULT_SINK@ +$AMOUNT_TO_INCREASE%)

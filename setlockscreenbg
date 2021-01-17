@@ -1,0 +1,8 @@
+#!/bin/bash
+
+BACKGROUND_PATH=$(cat /home/mk/.config/nitrogen/bg-saved.cfg \
+                    | grep file | cut -c6-)
+
+echo $BACKGROUND_PATH
+
+betterlockscreen -u $BACKGROUND_PATH
