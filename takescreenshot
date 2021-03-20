@@ -2,4 +2,4 @@
 
 # Takes a screenshot of the screen and saves it on the folder below
 
-scrot -e 'mv $f ~/Pictures/screenshots/'
+scrot -e 'mv $f ~/pictures/screenshots/'

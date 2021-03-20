@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BACKGROUND_PATH=$(cat /home/mk/.config/nitrogen/bg-saved.cfg \
+BACKGROUND_PATH=$(cat $HOME/.config/nitrogen/bg-saved.cfg \
                     | grep file | cut -c6-)
 
 echo $BACKGROUND_PATH

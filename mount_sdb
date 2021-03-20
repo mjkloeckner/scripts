@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mkdir -p /run/mount/usb
+
+mount /dev/sdb1 /run/mount/usb

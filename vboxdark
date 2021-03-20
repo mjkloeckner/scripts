@@ -1,0 +1,3 @@
+#!/bin/bash
+
+virtualbox -style Adwaita-dark %U

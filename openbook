@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Prints a list of books in dmenu from the folder $HOME/dox/books
+# if you choose one then its opened with zathura;
+
+BOOKNAME=$(ls $HOME/dox/books | dmenu -l 10)
+
+[ "$BOOKNAME" != "" ] && zathura $HOME/dox/books/"$BOOKNAME"
