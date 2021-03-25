@@ -5,3 +5,5 @@
 setxkbmap -option caps:swapescape
 
 setxkbmap -option altwin:swap_lalt_lwin
+
+# setxkbmap -option caps:super ; xcape -e 'Super_L=Escape'
