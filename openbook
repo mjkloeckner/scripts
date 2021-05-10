@@ -1,8 +1,19 @@
-#!/bin/bash
+#!/bin/sh
 
-# Prints a list of books in dmenu from the folder $HOME/dox/books
-# if you choose one then its opened with zathura;
+# Prints a list of books in dmenu and opens the chosen one with pdfviewer
+# The arguments receive are redirected to dmenu
 
-BOOKNAME=$(ls $HOME/dox/books | dmenu -l 10)
+# by github.com/klewer-martin
 
-[ "$BOOKNAME" != "" ] && zathura $HOME/dox/books/"$BOOKNAME"
+dir=$HOME/dox/books
+pdfviewer=zathura
+dmenucmds="-i -l 10 -h 14 -z 750 -bw 2 -c $@"
+
+bookname=$(ls $dir | dmenu $dmenucmds)
+
+[ "$bookname" = "" ] && exit
+
+[ $(file "$dir/$bookname" | cut -d ":" -f 2) = "directory" ] &&
+	dir=$dir/$bookname && bookname=$(ls "$dir" | dmenu $dmenucmds)
+
+[ "$bookname" != "" ] && $pdfviewer "$dir/$bookname"

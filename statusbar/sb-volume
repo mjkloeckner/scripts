@@ -13,7 +13,7 @@
 # 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 # esac
 
-[ $(pamixer --get-mute) = true ] && echo "🔇:  0%" && exit
+[ $(pamixer --get-mute) = true ] && echo "🔇  0%" && exit
 
 vol="$(pamixer --get-volume)"
 
@@ -27,5 +27,6 @@ else
 	icon="🔉"
 fi
 
-echo "$icon: $vol%"
-#echo "VOL: $vol%"
+printf "%s%3d%s" "$icon" "$vol" "%"
+# echo "$icon: $vol%"
+# echo "VOL: $vol%"
