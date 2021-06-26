@@ -2,4 +2,6 @@
 
 #i3lock --color=000000
 
-betterlockscreen -l dim
+i3lock -c 00000000 -n --wrongtext="" --veriftext="" --veriftext="" --noinputtext="" -i $HOME/.cache/i3lock/current/dimblur.png --ringcolor=8B008B --keyhlcolor=ff00ff --verifcolor=0000FF --indicator
+
+# betterlockscreen -l dim
