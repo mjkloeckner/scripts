@@ -13,5 +13,5 @@ kb="$(setxkbmap -query | grep -oP 'layout:\s*\K\w+')" || exit 1
 # 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 # esac
 
-printf "%s: %s" "⌨️" "$kb"
+printf "%s %s" "⌨️" "$kb"
 # echo "⌨️: $kb"
