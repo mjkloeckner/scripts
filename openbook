@@ -11,9 +11,9 @@ dmenucmds="-i -l 10 -h 14 -z 750 -bw 2 -c $@"
 
 bookname=$(ls $dir | dmenu $dmenucmds)
 
-[ "$bookname" = "" ] && exit
+[ -z "$bookname" ] && exit
 
 [ $(file "$dir/$bookname" | cut -d ":" -f 2) = "directory" ] &&
 	dir=$dir/$bookname && bookname=$(ls "$dir" | dmenu $dmenucmds)
 
-[ "$bookname" != "" ] && $pdfviewer "$dir/$bookname"
+[ -n "$bookname" ] && $pdfviewer "$dir/$bookname"

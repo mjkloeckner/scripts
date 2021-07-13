@@ -1,0 +1,10 @@
+#!/bin/sh
+
+kb="$(setxkbmap -query | grep -oP 'layout:\s*\K\w+')" || exit 1
+
+case $kb in
+	us) setxkbmap es && dunstify -t 2000 -h "string:bgcolor:#111111" "Switched keyboard layout to ES";;
+	es) setxkbmap us && dunstify -t 2000 -h "string:bgcolor:#111111" "Switched keyboard layout to US";;
+esac
+
+pkill -RTMIN+30 dwmblocks

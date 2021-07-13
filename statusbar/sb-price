@@ -9,7 +9,7 @@
 interval="@14d"	# History contained in chart preceded by '@' (7d = 7 days)
 dir="${XDG_DATA_HOME:-$HOME/.local/share}/crypto-prices"
 pricefile="$dir/$1"
-chartfile="$dir/$1-chart"
+# chartfile="$dir/$1-chart"
 
 # curl -s "rate.sx/1$1" > "$pricefile"
 
@@ -25,7 +25,7 @@ updateprice() { ping -q -c 1 example.org >/dev/null 2>&1 &&
 #[ "$(stat -c %x "$pricefile" 2>/dev/null | cut -d' ' -f1)" != "$(date '+%Y-%m-%d')" ] &&
 #	updateprice "$1"
 
-updateprice "$1"
+updateprice "$1" &
 
 # case $BLOCK_BUTTON in
 # 	1) setsid "$TERMINAL" -e less -Srf "$chartfile" ;;
@@ -42,4 +42,4 @@ updateprice "$1"
 # 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 # esac
 
-printf "$3$%0.3f" "$(cat "$pricefile")"
+printf "$3$%0.2f" "$(cat "$pricefile")"
