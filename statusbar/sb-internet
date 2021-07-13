@@ -4,8 +4,18 @@
 
 # by github.com/klewer-martin
 
+<<<<<<< HEAD
 ip=$(ip -o a | awk '/: e.*.inet .*/ { print $4 }' | sed 's/\// /' | awk '{ print $1 }');
 [[ -z $ip ]] && ip="Disconnected"
 icon="🌐";
 
+=======
+estatus="$(cat /sys/class/net/e*/operstate)"
+
+if [ "$estatus" = "down" ]; 
+	then ip=$(ip -o a | awk '/: w.*.inet .*/ { print $4 }' | sed 's/\// /' | awk '{ print $1 }'); icon="📡";
+	else ip=$(ip -o a | awk '/: e.*.inet .*/ { print $4 }' | sed 's/\// /' | awk '{ print $1 }'); icon="🌐";
+fi;
+
+>>>>>>> cecb3e8dd633fd5ba597ad536ffabd0c5f29726e
 printf "%s %s\n" "$icon" "$ip"

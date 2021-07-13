@@ -1,5 +1,0 @@
-#!/bin/bash
-
-USB=$(ls /dev | grep sd | grep -v sda | grep 1 | dmenu)
-
-echo $USB

@@ -9,4 +9,8 @@
 #	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 #esac
 
+<<<<<<< HEAD
 free --mebi | sed -n '2{p;q}' | awk '{printf ("🧠 %2.2fG\n", ( $3 / 1024), ($2 / 1024))}'
+=======
+free --mebi | sed -n '2{p;q}' | awk '{printf (" 🧠 %2.2fG\n", ( $3 / 1024), ($2 / 1024))}'
+>>>>>>> cecb3e8dd633fd5ba597ad536ffabd0c5f29726e
