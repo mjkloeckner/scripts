@@ -7,7 +7,7 @@
 
 [ -z "$3" ] && exit 1
 interval="@14d"	# History contained in chart preceded by '@' (7d = 7 days)
-dir="${XDG_DATA_HOME:-$HOME/.local/share}/crypto-prices"
+dir="$HOME/.local/share/crypto-prices"
 pricefile="$dir/$1"
 # chartfile="$dir/$1-chart"
 
@@ -18,13 +18,14 @@ pricefile="$dir/$1"
 #	curl -s "rate.sx/$1$interval" > "$chartfile" ;}
 
 updateprice() { ping -q -c 1 example.org >/dev/null 2>&1 &&
-	binance-cli --keyfile /home/mk/go/bin/keys.json list-price --symbol $1 | grep price | awk {'print $2'} | sed 's/"//g' > "$pricefile" ;}
+	price=$(binance-cli --keyfile ~/.local/go/bin/keys.json list-price --symbol $1 | grep price | awk {'print $2'} | sed 's/"//g') &&
+	[ $(echo "$price == 0" | bc) -ne 1 ] &&
+	echo $price > "$pricefile" ;}
 
 [ -d "$dir" ] || mkdir -p "$dir"
 
-#[ "$(stat -c %x "$pricefile" 2>/dev/null | cut -d' ' -f1)" != "$(date '+%Y-%m-%d')" ] &&
-#	updateprice "$1"
-
+# [ "$(stat -c %x "$pricefile" 2>/dev/null | cut -d' ' -f1)" != "$(date '+%Y-%m-%d')" ] &&
+# 	updateprice "$1"
 updateprice "$1" &
 
 # case $BLOCK_BUTTON in

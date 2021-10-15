@@ -1,7 +1,12 @@
-#!/bin/bash
+#!/bin/sh
 
-# Takes a screenshot of the screen and saves it on the folder below
+# Takes a screenshot of the screen and then saves it on the corresponding folder
 
-folder="~/pictures/screenshots/"
+FOLDER=~/pictures/screenshots
+FILENAME=$FOLDER/$(date "+%H-%M-%S_%d-%m-%Y_scrot.png")
 
-scrot -z -e 'mv $f '
+scrot $FILENAME
+
+ACTION=$(dunstify -r 1 -t 5000 -h "string:bgcolor:#111111" "Saving screenshot ..." -h "string:bgcolor:#111111" "Click to open" --action=3,Open)
+
+[ $ACTION -eq 3 ] && xdg-open $FILENAME;

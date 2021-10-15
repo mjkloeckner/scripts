@@ -1,7 +1,9 @@
 #!/bin/bash
 
-#i3lock --color=000000
+# Pauses notifications so it wont show during lockscreen
+dunstctl set-paused true
 
-i3lock -c 00000000 -n --wrongtext="" --veriftext="" --veriftext="" --noinputtext="" -i $HOME/.cache/i3lock/current/dimblur.png --ringcolor=8B008B --keyhlcolor=ff00ff --verifcolor=0000FF --indicator
+i3lock -c 00000000 -n --wrong-text="" --lock-text="" --lockfailed-text="" --verif-text="" --verif-text="" --noinput-text="" -i $HOME/.cache/i3lock/current/dimblur.png -M --ring-color=8B008B --keyhl-color=ff00ff --verif-color=0000FF --indicator
 
-# betterlockscreen -l dim
+# Re-enables notifications when the device is unlocked
+dunstctl set-paused false

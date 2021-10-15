@@ -7,7 +7,7 @@
 
 dir=$HOME/dox/books
 pdfviewer=zathura
-dmenucmds="-i -l 10 -h 14 -z 750 -bw 2 -c $@"
+dmenucmds="-i -l 30 -h 14 -z 750 -bw 2 -c $@"
 
 bookname=$(ls $dir | dmenu $dmenucmds)
 

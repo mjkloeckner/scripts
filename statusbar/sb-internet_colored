@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# Prints your local ip address, if you are connected both via wireless & ethernet then the ethernet ip is printed
+
+# by github.com/klewer-martin
+
+estatus="$(cat /sys/class/net/e*/operstate)"
+espeed="$(cat /sys/class/net/e*/speed)"
+
+wstatus="$(cat /sys/class/net/w*/operstate)"
+wspeed=$(cat /proc/net/wireless | awk '/wlp*/ { $3=substr($3, 0, length($3) - 1); print $3 }')
+
+if [ "$estatus" = "down" ]; 
+	then if [ "$wstatus" = "down" ]
+		then ip="^c#FF2A2A^Disconnected^d^"; icon="🌐"
+		else case $wstatus in
+				[0-2][0-9])
+					ip=$(ip -o a | awk '/: w.*.inet .*/ { print $4 }' | sed 's/\// /' | awk '{ print $1 }'); icon="📡";;
+				[2-4][0-9])
+					ip=$(ip -o a | awk '/: w.*.inet .*/ { print $4 }' | sed 's/\// /' | awk '{ print $1 }'); icon="📡";;
+				[5-7][0-9])
+					ip=$(ip -o a | awk '/: w.*.inet .*/ { print $4 }' | sed 's/\// /' | awk '{ print $1 }'); icon="📡";;
+			esac
+		fi;
+	else ip=$(ip -o a | awk '/: e.*.inet .*/ { print $4 }' | sed 's/\// /' | awk '{ print $1 }'); icon="🌐";
+fi;
+
+printf "%s^c#00FF00^ %s^d^\n" "$icon" "$ip"
