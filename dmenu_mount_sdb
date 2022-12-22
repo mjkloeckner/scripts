@@ -1,3 +1,0 @@
-#!/bin/bash
-
-sudo prompt.sh "Do you want to mount /dev/sdb1 into /run/mount/usb ?" "mount_sdb"

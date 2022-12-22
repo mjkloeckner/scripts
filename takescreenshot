@@ -1,12 +1,17 @@
 #!/bin/sh
 
-# Takes a screenshot of the screen and then saves it on the corresponding folder
+# Takes a screenshot of the screen and sends a notification with a preview
 
 FOLDER=~/pictures/screenshots
 FILENAME=$FOLDER/$(date "+%H-%M-%S_%d-%m-%Y_scrot.png")
 
-scrot $FILENAME
+scrot -q 100 $FILENAME
 
-ACTION=$(dunstify -r 1 -t 5000 -h "string:bgcolor:#111111" "Saving screenshot ..." -h "string:bgcolor:#111111" "Click to open" --action=3,Open)
+convert -brightness-contrast 10x10 $FILENAME -resize 512x512 \
+	/tmp/takescreenshot_icon.png
 
-[ $ACTION -eq 3 ] && xdg-open $FILENAME;
+ACTION=$(dunstify -r 1 -t 5000 -h "string:bgcolor:#111111" \
+	"Saving screenshot to $FOLDER" -h "string:bgcolor:#111111" \
+	"Right click to open" --action=3,Open -i /tmp/takescreenshot_icon.png)
+
+[ $ACTION -eq 3 ] && mimeopen $FILENAME;

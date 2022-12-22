@@ -1,3 +1,0 @@
-#!/bin/bash
-
-$( xbacklight -inc 2 ) & $(xbacklight -get > /home/mk/.backlight)

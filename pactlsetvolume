@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# amount=$(echo "$1" | cut -d " " -f 2)
+amount=$2
+curr=$(pamixer --get-volume)
+
+send_notification() {
+	dunstify -r 13123 -h "int:value:$1" "$2 Volume ($1%)" -t 2000
+}
+
+get_icon() {
+	if [ "$curr" -gt "50" ]; then
+		icon="🔊"
+	elif [ "$curr" -eq "0" ]; then
+		icon="🔇"
+	elif [ "$curr" -lt "25" ]; then
+		icon="🔈"
+	else
+		icon="🔉"
+	fi
+}
+
+if [ $amount == "0" ]; then
+	pactl set-sink-mute @DEFAULT_SINK@ toggle;
+	if [ "$(pamixer --get-mute)" == "false" ]; then
+		get_icon $icon
+		send_notification $curr $icon
+	else
+		send_notification "0" "🔇"
+	fi
+	exit
+fi
+
+# min=$((0 + $amount))
+# max=$((100 - $amount))
+
+# (($curr<=$max)) && $(pactl set-sink-volume @DEFAULT_SINK@ +$amount%)
+
+pamixer $1 $2
+# curr=$(pamixer --get-volume)
+# [ $curr -ne $min ] && [ $curr -ne $max ] && curr=$(($curr + $amount))
+
+get_icon
+# send_notification $curr $icon

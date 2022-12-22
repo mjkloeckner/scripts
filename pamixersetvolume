@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# amount=$(echo "$1" | cut -d " " -f 2)
+# amount=$2
+
+send_notification() {
+	dunstify -r 13123 "$2 Volume $1%" -t 1750
+}
+
+get_icon() {
+	if [ "$mute" == "true" ] | [ "$curr" -eq "0" ]; then
+		icon="🔇"
+		break;
+	elif [ "$curr" -gt "50" ]; then
+		icon="🔊"
+	elif [ "$curr" -lt "25" ]; then
+		icon="🔈"
+	else
+		icon="🔉"
+	fi
+}
+
+pamixer $1 $2 && kill -35 $(pidof dwmblocks)
+
+curr=$(pamixer --get-volume)
+mute=$(pamixer --get-mute)
+
+get_icon
+send_notification $curr $icon
