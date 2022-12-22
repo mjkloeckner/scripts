@@ -27,4 +27,5 @@ esac
 #esac
 
 #date "+ %a %b %d %Y $icon: %I:%M%p"
-date "+📅 %a %d/%m/%Y | $icon %R"
+# date "+📅 %a %d/%m/%Y  $icon %R"
+date "+📅 %a %d %b %Y  $icon %R"

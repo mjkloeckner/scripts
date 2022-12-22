@@ -1,3 +1,9 @@
 #!/bin/sh
 
-betterlockscreen -u $(grep file $HOME/.config/nitrogen/bg-saved.cfg | cut -c6-)
+# Sets the same image used for the wallpaper as the lockscreen background
+
+imgname=$(grep file $HOME/.config/nitrogen/bg-saved.cfg | cut -c6-)
+
+echo $imgname
+
+betterlockscreen -u "$imgname"

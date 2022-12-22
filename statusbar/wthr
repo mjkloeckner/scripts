@@ -1,0 +1,134 @@
+#!/usr/bin/python3
+
+import requests
+import json
+import pathlib
+from datetime import datetime
+
+# TODO: support other units
+
+icons_day = {
+    "clear_sky": "☀️",
+    "few_clouds": "🌤️",
+    "scattered_clouds": "🌤",
+    "broken_clouds": "☁",
+    "overcast_clouds": "☁",
+    "shower_rain": "🌧",
+    "very_heavy_rain": "🌧",
+    "rain": "🌧",
+    "light_rain": "🌧️",
+    "thunderstorm": "⛈",
+    "snow": "❄",
+    "mist": "🌫"
+}
+
+moon_phase = {
+    (0.00, 0.124):  "🌑",
+    (0.124, 0.249): "🌒",
+    (0.250, 0.374): "🌓",
+    (0.375, 0.49):  "🌔",
+    (0.50, 0.674):  "🌕",
+    (0.675, 0.749): "🌖",
+    (0.750, 0.824): "🌗",
+    (0.825, 0.99):  "🌘",
+    (0.99, 1):      "🌑"
+}
+
+lat = -34.71
+lon = -58.27
+api_key = "5d30773002dbb7a5aaa846b1656965b2"
+units = "metric"
+exclude = "minutely,hourly,alert"
+cache_file_name = "/home/mk/.cache/wthr.json"
+
+# update time in minutes
+update_time = 5
+
+url = "https://api.openweathermap.org/data/2.5/onecall"
+params = {'lat': lat, 'lon': lon, 'appid': api_key, 'units': units, 'exclude': exclude}
+
+curr_time = datetime.now().timestamp()
+cache_file = pathlib.Path(cache_file_name)
+
+def cache_update():
+    pass
+
+def cache_fetch():
+    pass
+
+if cache_file.exists() != True:
+    # file doesn't exist, creates one
+    pathlib.Path(cache_file_name).touch()
+    print("cache file created")
+
+    try:
+        res = requests.get(url, params)
+    except (requests.ConnectionError, res):
+        print("☠️ Service down")
+        quit()
+
+    wthr_dict = json.loads(res.text)
+    with open(cache_file_name,'w') as cache_file:
+        json.dump(wthr_dict, cache_file, indent=4)
+else:
+    # get file modified time
+    mtime = cache_file.stat().st_mtime
+    if (curr_time - mtime) > (update_time * 60):
+        try:
+            res = requests.get(url, params)
+        except (requests.ConnectionError, res):
+            print("☠️ Service down")
+            quit()
+
+        wthr_dict = json.loads(res.text)
+        with open(cache_file_name,'w') as cache_file:
+            json.dump(wthr_dict, cache_file, indent=4)
+    else:
+        try:
+            with open(cache_file_name,'r') as cache_file:
+                wthr_dict = json.loads(cache_file.read())
+        except ValueError:
+            # file not JSON
+            try:
+                res = requests.get(url, params)
+            except (requests.ConnectionError, res):
+                print("☠️ Service down")
+                quit()
+
+            wthr_dict = json.loads(res.text)
+            with open(cache_file_name,'w') as cache_file:
+                json.dump(wthr_dict, cache_file, indent=4)
+
+# print(json.dumps(wthr_dict, indent=4, sort_keys=True))
+
+desc = wthr_dict['current']['weather'][0]['description']
+main = wthr_dict['current']['weather'][0]['main']
+# temp = int(wthr_dict['current']['feels_like'])
+temp = int(wthr_dict['current']['temp'])
+icon = icons_day[desc.replace(' ', '_')]
+moon_curr = wthr_dict['daily'][0]['moon_phase']
+curr_time_int = int(datetime.now().strftime('%H%M'))
+sunrise = int(wthr_dict['current']['sunrise'])
+sunset = int(wthr_dict['current']['sunset'])
+
+sunrise = int(datetime.fromtimestamp(sunrise).strftime('%H%M'))
+sunset = int(datetime.fromtimestamp(sunset).strftime('%H%M'))
+
+for range, moon_icon in moon_phase.items():
+    if range[0] <= moon_curr <= range[1]:
+        moon_curr = moon_icon
+        break
+
+night = (0000, sunrise, sunset + 100, 2359)
+sunset = (sunset, sunset + 50)
+dusk = (sunset[1], sunset[1] + 50)
+day = (sunrise, sunset)
+
+if (dusk[0] <= curr_time_int <= dusk[1]) and main == 'Clear':
+    icon = "🌆"
+elif (sunset[0] <= curr_time_int <= sunset[1]) and (main == 'Clear'):
+    icon = "🌇"
+elif ((night[0] <= curr_time_int <= night[1]) or (night[2] <= curr_time_int <= night[3])):
+    icon = moon_curr
+
+print("{} {}° {}".format(icon, temp, main))

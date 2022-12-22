@@ -18,6 +18,6 @@ printf "%s %s" "✍️" "${kb^^}"
 <<<<<<< HEAD
 =======
 
-printf "%s %s" "⌨️" "$kb"
+# printf "%s %s" "⌨️" "$kb"
 # echo "⌨️: $kb"
 >>>>>>> cecb3e8dd633fd5ba597ad536ffabd0c5f29726e

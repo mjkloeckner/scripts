@@ -1,0 +1,33 @@
+#!/bin/sh
+
+nc -dzw2 google.com 443 2> /dev/null
+
+if [[ $? -ne 0 ]]; then
+	printf "☠️ Service down\n" ;
+	exit;
+fi
+
+# $(nc -dzw2 google.com 443 &> /dev/null) || printf "☠️ Service down\n"  && exit 0
+
+curr_time=$(date +"%H%M")
+raw=$(curl -s wttr.in/1876\?format="%d|%S|%t|%C|%c|%m\n" | tr --delete " " | cut -d "|" -f 1,2,3,4,5,6)
+
+echo $raw | grep -i unknown -q && printf "☠️ Service down" && exit
+
+for i in {0..5}; do
+	data[$i]=$(echo -n $raw | cut -d "|" -f $((i + 1)))
+done
+
+data[2]=$(echo -n ${data[2]} | cut -d "," -f 1)
+
+dusk=$(echo -n ${data[0]} | cut -d ":" -f 1,2 | tr --delete ":")
+sunrise=$(echo -n ${data[1]} | cut -d ":" -f 1,2 | tr --delete ":")
+temp=$(echo -n ${data[2]})
+condition=${data[3]}
+day=${data[4]}
+moon=${data[5]}
+temp=$(echo -n ${data[2]} | tr --delete '+')
+
+[[ $curr_time -lt $dusk && $curr_time -gt $sunrise ]] &&
+	printf "%s %s %s" $day $condition $temp ||
+	printf "%s %s %s" $moon $condition $temp

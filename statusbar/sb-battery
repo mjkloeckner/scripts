@@ -16,21 +16,28 @@ case $BLOCK_BUTTON in
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
+if [ ! -e /sys/class/power_supply/BAT?* ]; then
+	status="🔌 " && printf "%s%s" "$status" "AC" && exit 0;
+fi
+
 # Loop through all attached batteries and format the info
 for battery in /sys/class/power_supply/BAT?*; do
 	# If non-first battery, print a space separator.
 	[ -n "${capacity+x}" ] && printf " "
 	# Sets up the status and capacity
 	case "$(cat "$battery/status")" in
-		"Full") status="⚡" ;;
+		"Full") status="🔌";;
+			# printf "%s %s" "$status" "AC";
+			# exit 0;;
 		"Discharging") status="🔋" ;;
-		"Charging") status="🔌" ;;
+		"Charging") status="⚡" ;;
 		"Not charging") status="🛑" ;;
-		"Unknown") status="♻️: " ;;
+		"Unknown") status="♻️ " ;;
 	esac
 	capacity=$(cat "$battery/capacity")
 	# Will make a warn variable if discharging and low
-	[ "$status" = "🔋: " ] && [ "$capacity" -le 25 ] && warn="❗"
+	[ "$status" = "🔋" ] && [ "$capacity" -le 20 ] && status="❗"
+
 	# Prints the info
-	printf "%s%.1s%*d%%" "$status" "$warn" "3" "$capacity"; unset warn
+	printf "%s%*d%%" "$status" "3" "$capacity";
 done && exit 0

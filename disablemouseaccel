@@ -4,4 +4,7 @@ xinput --set-prop 13 'libinput Accel Profile Enabled' 0, 1
 
 xinput --set-prop 14 'libinput Accel Profile Enabled' 0, 1
 
-xinput --set-prop 'Logitech Wireless Mouse' 'libinput Accel Profile Enabled' 0, 1
+xinput --set-prop 'Logitech Wireless Mouse' \
+	'libinput Accel Profile Enabled' 0, 1
+
+xinput --set-prop 'DLLA6AE:00 06CB:75DD Touchpad' 'libinput Tapping Enabled' 1

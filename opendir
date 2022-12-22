@@ -1,10 +1,5 @@
 #!/bin/sh
 
-# Prints a list of books in dmenu and opens the chosen one with pdfviewer
-# The arguments receive are redirected to dmenu
-
-# by github.com/klewer-martin
-
 dmenucmds="-i -l 10 -h 14 -z 750 -bw 2 -c $@"
 dirname=$(fd -a | dmenu $dmenucmds)
 
