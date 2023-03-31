@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 
+# Dependencies:
+#     requests
+
 import requests
 import json
 import pathlib
@@ -16,7 +19,6 @@ icons_day = {
     "shower_rain": "🌧",
     "very_heavy_rain": "🌧",
     "rain": "🌧",
-    "light_rain": "🌧️",
     "thunderstorm": "⛈",
     "snow": "❄",
     "mist": "🌫"

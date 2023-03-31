@@ -2,8 +2,9 @@
 
 # Sets the same image used for the wallpaper as the lockscreen background
 
-imgname=$(grep file $HOME/.config/nitrogen/bg-saved.cfg | cut -c6-)
+# imgname=$(grep file $HOME/.config/nitrogen/bg-saved.cfg | cut -c6-)
+# imgname="/home/mk/pix/wg/1655994685668.jpg"
+imgname="$(grep -o "'.*.[jpg|jpeg|png]'" $HOME/.fehbg)"
+imgname="$(echo $imgname | sed "s/'//g")"
 
-echo $imgname
-
-betterlockscreen -u "$imgname"
+betterlockscreen -u $imgname

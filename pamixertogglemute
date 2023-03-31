@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # amount=$(echo "$1" | cut -d " " -f 2)
-send_notification() {
+# send_notification() {
 	# dunstify -r 13123 -h "int:value:$1" "$2 Volume ($1%)" -t 2000
-	dunstify -r 13123 "$2 Volume $1%" -t 1750
-}
+	# dunstify -r 13123 "$2 Volume $1%" -t 1750
+# }
 
 get_icon() {
 	if [ "$curr" -gt "50" ]; then
@@ -23,10 +23,11 @@ pactl set-sink-mute @DEFAULT_SINK@ toggle;
 if [ "$(pamixer --get-mute)" == "false" ]; then
 	curr=$(pamixer --get-volume)
 	get_icon $icon
-	send_notification $curr $icon
-else
-	send_notification "0" "🔇"
+	# send_notification $curr $icon
 fi
+# else
+	# send_notification "0" "🔇"
+# fi
 
 kill -35 $(pidof dwmblocks)
 

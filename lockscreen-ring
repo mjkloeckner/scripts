@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Pauses notifications so it wont show during lockscreen
+# dunstctl set-paused true
+
+# xset dpms force off
+
+# sleep 5;
+
+# i3lock -b -c 00000000 -n --wrong-text="" --lock-text="" --lockfailed-text="" --verif-text="" --verif-text="" --noinput-text="" -i $HOME/.cache/betterlockscreen/current/wall_dimblur.png -M --ring-color=8B008B --keyhl-color=ff00ff --verif-color=0000FF --indicator --pass-media-keys --radius 100.0 --pointer default
+i3lock -b -c 00000000 -n --wrong-text="" --lock-text="" --lockfailed-text="" --verif-text="" --verif-text="" --noinput-text="" -i /home/mk/.config/scheme/lockscreen-bg -M --ring-color=8B008B --keyhl-color=ff00ff --verif-color=0000FF --indicator --pass-media-keys --radius 100.0 --pointer default
+
+# Re-enables notifications when the device is unlocked
+# dunstctl set-paused false
+
+# pkill -RTMIN+8 dwmblocks

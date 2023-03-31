@@ -11,8 +11,6 @@
 # make CapsLock behave like Ctrl:
 # setxkbmap -option ctrl:nocaps
 
-
-
 setxkbmap -option altwin:swap_lalt_lwin,altwin:swap_alt_win,ctrl:nocaps
 
 # make short-pressed Ctrl behave like Escape:

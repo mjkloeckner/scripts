@@ -9,7 +9,7 @@ wstatus="$(cat /sys/class/net/w*/operstate)"
 
 if [ "$estatus" = "down" ]; then
 	if [ "$wstatus" = "down" ]; then
-		ip="Disconnected"; icon="🌐"
+		ip="Disconnected"; icon="☠️"
 	else
 		ip=$(ip -o a | awk '/: w.*.inet .*/ { print $4 }' | sed 's/\// /' | awk '{ print $1 }')
 		icon="📡"
@@ -35,6 +35,6 @@ case $speed in
 		color="^c#00FF00^";;
 esac
 
-[ -z $ip ] && printf "%s %s\n" "$icon" "Connecting" && exit
+[ -z $ip ] && printf "%s %s" "$icon" "Connecting" && exit
 
 printf "%s %s" "$icon" "$ip"

@@ -1,11 +1,8 @@
 #!/bin/bash
 
-amount_to_increase=$1
+AMOUNT_TO_INCREASE=$1
 
-current_volume=$(pamixer --get-volume)
-max_volume=$((100 - $amount_to_increase))
+CURRENT_VOLUME=$(pamixer --get-volume)
+MAX_VOLUME=$((100 - $AMOUNT_TO_INCREASE))
 
-(($current_volume<=$max_volume)) && $(pactl set-sink-volume @DEFAULT_SINK@ +$amount_to_increase%)
-
-current_volume=$(pamixer --get-volume)
-notify-send -h int:value:$current_volume "Volume" -h string:bgcolor:#111111 -h string:fgcolor:#ffffff -i 🔊 -t 1500;
+(($CURRENT_VOLUME<=$MAX_VOLUME)) && $(pactl set-sink-volume @DEFAULT_SINK@ +$AMOUNT_TO_INCREASE%)

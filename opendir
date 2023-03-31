@@ -1,6 +1,0 @@
-#!/bin/sh
-
-dmenucmds="-i -l 10 -h 14 -z 750 -bw 2 -c $@"
-dirname=$(fd -a | dmenu $dmenucmds)
-
-alacritty --working-directory "$dirname"

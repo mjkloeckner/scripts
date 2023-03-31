@@ -1,0 +1,3 @@
+#!/bin/sh
+
+kill -56 "$(pidof dwmblocks)"

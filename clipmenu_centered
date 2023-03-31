@@ -15,5 +15,4 @@ dmenufont='DejaVuSansMono Nerd Font:style=Regular:size=8'
 
 dmenucmds="-i -l 30 -h 14 -z 750 -bw 2 -c $@"
 
-clipmenu $dmenucmds -nb $col_gray1 -nf $col_gray3 -sb $col_darkmagenta \
-	-sf $col_gray4 -fn "$dmenufont"
+clipmenu $dmenucmds -nb $col_gray1 -nf $col_gray3 -sb $col_darkmagenta -sf $col_gray4 -fn "$dmenufont"

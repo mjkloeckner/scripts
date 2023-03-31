@@ -1,0 +1,9 @@
+#!/bin/sh
+
+pid=$(pidof dwmblocks)
+
+# Makes grep faster
+export LC_ALL=C
+
+pactl subscribe | grep --line-buffered "sink" \
+	| while read -r UNUSED\_LINE; do kill -35 $pid; done

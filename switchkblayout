@@ -7,8 +7,10 @@ kb="$(setxkbmap -query | grep -oP 'layout:\s*\K\w+')" || exit 1
 case $kb in
 	# us) setxkbmap es && dunstctl close-all && dunstify -t 2000 -h "string:bgcolor:#111111" "Switched keyboard layout to ES";;
 	# es) setxkbmap us && dunstctl close-all && dunstify -t 2000 -h "string:bgcolor:#111111" "Switched keyboard layout to US";;
-	us) setxkbmap -option altwin:swap_lalt_lwin,altwin:swap_alt_win,ctrl:nocaps es && dunstify -r 1 -t 2000 -h "string:bgcolor:#111111" "Switched keyboard layout to ES 🇦🇷";;
-	es) setxkbmap -option altwin:swap_lalt_lwin,altwin:swap_alt_win,ctrl:nocaps us && dunstify -r 1 -t 2000 -h "string:bgcolor:#111111" "Switched keyboard layout to US 🇺🇸";;
+	# us) setxkbmap -option altwin:swap_lalt_lwin,altwin:swap_alt_win,ctrl:nocaps es && dunstify -r 1 -t 2000 -h "string:bgcolor:#111111" "Switched keyboard layout to ES 🇦🇷";;
+	# es) setxkbmap -option altwin:swap_lalt_lwin,altwin:swap_alt_win,ctrl:nocaps us && dunstify -r 1 -t 2000 -h "string:bgcolor:#111111" "Switched keyboard layout to US 🇺🇸";;
+	us) setxkbmap -option altwin:swap_lalt_lwin,altwin:swap_alt_win,ctrl:nocaps es;;
+	es) setxkbmap -option altwin:swap_lalt_lwin,altwin:swap_alt_win,ctrl:nocaps us;;
 esac
 
-pkill -RTMIN+4 dwmblocks
+kill -55 $(pidof dwmblocks)

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+tmux ls 2> /dev/null | grep -q scratchpad && tmux attach-session -t scratchpad \
+	|| tmux new-session -s scratchpad
