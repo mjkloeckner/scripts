@@ -1,19 +1,28 @@
 #!/bin/sh
 
-# Prints a list of books in dmenu and opens the chosen one with pdfviewer
-# The arguments receive are redirected to dmenu
+# Prints a list of books in dmenu and opens the chosen one with the default pdfviewer
+# The arguments received are passthrough to dmenu
+# by github.com/mjkloeckner
 
-# by github.com/klewer-martin
+col_gray1="#000000"
+col_gray3="#cccccc"
+col_darkmagenta="#8B008B"
+col_gray4="#eeeeee"
 
 dir=$HOME/dox/books
 pdfviewer=zathura
-dmenucmds="-i -l 30 -h 14 -z 750 -bw 2 -c $@"
 
-bookname=$(ls $dir | dmenu $dmenucmds)
+# dmenufont='DejaVuSansMono Nerd Font:style=Regular:size=8'
+dmenufont='Victor Mono:style=SemiBold:size=9'
+# dmenucmds="-i -l 30 -h 14 -z 750 -bw 2 -c $@"
+
+dmenucmds="-i -l 30 -h 8 -z 850 -bw 2 -c $@"
+
+bookname=$(ls $dir | dmenu $dmenucmds -nb $col_gray1 -nf $col_gray3 -sb $col_darkmagenta -sf $col_gray4 -fn "$dmenufont")
 
 [ -z "$bookname" ] && exit
 
-[ $(file "$dir/$bookname" | cut -d ":" -f 2) = "directory" ] &&
-	dir=$dir/$bookname && bookname=$(ls "$dir" | dmenu $dmenucmds)
+[ "$(file "$dir/$bookname" | cut -d ":" -f 2)" = "directory" ] &&
+	dir=$dir/$bookname && bookname=$(ls "$dir" | dmenu $dmenucmds -nb $col_gray1 -nf $col_gray3 -sb $col_darkmagenta -sf $col_gray4 -fn "$dmenufont" )
 
 [ -n "$bookname" ] && $pdfviewer "$dir/$bookname"

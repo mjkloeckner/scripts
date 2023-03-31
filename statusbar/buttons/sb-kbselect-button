@@ -1,0 +1,8 @@
+#!/bin/sh
+
+case "$1" in
+	1) switchkblayout;;
+    # 2) pactl set-sink-volume @DEFAULT_SINK@ +1; pkill -RTMIN+1 dwmblocks;;
+    # 3) ;;
+	# 4) ;;
+esac

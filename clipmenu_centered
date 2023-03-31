@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Prints a list of books in dmenu and opens the chosen one with pdfviewer
+# The arguments receive are redirected to dmenu
+
+# by github.com/klewer-martin
+
+col_gray1="#000000"
+col_gray3="#cccccc"
+col_darkmagenta="#8B008B"
+col_gray4="#eeeeee"
+
+dmenufont='DejaVuSansMono Nerd Font:style=Regular:size=8'
+# dmenucmds="-i -l 30 -h 14 -z 750 -bw 2 -c $@"
+
+dmenucmds="-i -l 30 -h 14 -z 750 -bw 2 -c $@"
+
+clipmenu $dmenucmds -nb $col_gray1 -nf $col_gray3 -sb $col_darkmagenta -sf $col_gray4 -fn "$dmenufont"

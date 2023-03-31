@@ -9,7 +9,7 @@
 # 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 # esac
 
-ctemp=$(sensors | awk '/Package id/ {$4 = substr($4, 2, length($4) - 5); print $4}')
+ctemp=$(sensors | awk '/CPU:/ {$2 = substr($2, 2, length($2) - 5); print $2}')
 # gtemp=$(sensors | awk '/edge/ {$2 = substr($2, 2, length($2) - 5); print $2}')
 
 # printf "🌡️ C$ctemp° G$gtemp°"

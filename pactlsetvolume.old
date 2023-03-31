@@ -1,0 +1,95 @@
+#!/bin/bash
+
+amount_to_increase=$1
+current_volume=$(pamixer --get-volume)
+is_muted=$(pamixer --get-mute)
+
+send_notification() {
+	dunstify -r 13123 -h "int:value:$1" "$2 Volume ($1%)" -t 2000;
+}
+
+get_icon() {
+	if [ "$current_volume" -gt "50" ]; then
+		icon="🔊"
+	elif [ "$current_volume" -eq "0" ]; then
+		icon="🔇"
+	elif [ "$current_volume" -lt "25" ]; then
+		icon="🔈"
+	else
+		icon="🔉"
+	fi
+}
+
+set_volume() {
+	max_volume=$((100 - $amount_to_increase))
+
+	(($current_volume<=$max_volume)) && $(pactl set-sink-volume @DEFAULT_SINK@ +$amount_to_increase%)
+
+	current_volume=$(pamixer --get-volume)
+
+	# Avoid delay between notification and dwmblocks update
+	pkill -RTMIN+1 dwmblocks;
+}
+
+if [[ "$is_muted" == "true" ]]; then
+	if [[ $amount_to_increase == "0" ]]; then
+		# It's muted and we want to unmute
+		get_icon $icon
+		send_notification $current_volume $icon
+		pactl set-sink-mute @DEFAULT_SINK@ toggle;
+		# pkill -RTMIN+1 dwmblocks; # Avoid delay between notification and dwmblocks update
+	else
+		# It's muted and we want to raise/lower the volume
+		# pkill -RTMIN+1 dwmblocks;
+		# send_notification "0" "🔇"
+		set_volume
+		get_icon
+		send_notification $current_volume "🔇"
+		# pkill -RTMIN+1 dwmblocks; # Avoid delay between notification and dwmblocks update
+	fi
+else
+	if [[ $amount_to_increase == "0" ]]; then
+		# It's not muted and we want to mute
+		get_icon $icon
+		send_notification $current_volume "🔇"
+		pactl set-sink-mute @DEFAULT_SINK@ toggle;
+		# pkill -RTMIN+1 dwmblocks; # Avoid delay between notification and dwmblocks update
+	else
+		# It's not muted and we want to raise/lower the volume
+		# send_notification "0" "🔇"
+		set_volume
+		get_icon
+		send_notification $current_volume $icon
+	fi
+fi
+
+pkill -RTMIN+1 dwmblocks; # Avoid delay between notification and dwmblocks update
+exit
+
+# if [[ $amount_to_increase == "0" ]]; then
+# 	if [[ "$is_muted" == "true" ]]; then
+# 		get_icon $icon
+# 		# Avoid delay between notification and dwmblocks update
+# 		pkill -RTMIN+1 dwmblocks;
+# 		send_notification $current_volume $icon
+# 		pactl set-sink-mute @DEFAULT_SINK@ toggle;
+# 	else 
+# 		# Avoid delay between notification and dwmblocks update
+# 		pkill -RTMIN+1 dwmblocks;
+# 		send_notification "0" "🔇"
+# 		pactl set-sink-mute @DEFAULT_SINK@ toggle;
+# 	fi
+# 	exit
+# fi
+
+# max_volume=$((100 - $amount_to_increase))
+
+# (($current_volume<=$max_volume)) && $(pactl set-sink-volume @DEFAULT_SINK@ +$amount_to_increase%)
+
+# current_volume=$(pamixer --get-volume)
+
+# # Avoid delay between notification and dwmblocks update
+# pkill -RTMIN+1 dwmblocks;
+
+# get_icon
+# send_notification $current_volume $icon
