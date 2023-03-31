@@ -1,0 +1,15 @@
+#!/bin/sh
+
+col_gray1="#000000"
+col_gray3="#cccccc"
+col_darkmagenta="#8B008B"
+col_gray4="#eeeeee"
+
+# dmenufont='Victor Mono:style=SemiBold:size=9';
+dmenufont="DejaVuSansMono Nerd Font:style=Regular:size=8"
+dmenuargs="-l 16 -c -h 16 -z 850 -bw 2"
+
+clipmenu -fn "$dmenufont" -nb $col_gray1 -nf $col_gray3 \
+	-sb $col_darkmagenta -sf $col_gray4 $dmenuargs -p "Clipboard paste: "
+
+[ "$?" = "0" ] && xdotool key shift+Insert

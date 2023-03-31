@@ -14,16 +14,18 @@
 # 	--indicator --pass-media-keys --radius 100.0 --pointer default
 
 # windows 11 lockscreen style (requieres Segoe UI font)
-i3lock -b -c 00000000 -n --wrong-text="" --lock-text="" --lockfailed-text="" \
+i3lock -b -c 00000000 --wrong-text="" --lock-text="" --lockfailed-text="" \
         --verif-text="" --verif-text="" --noinput-text="" \
-        -i $HOME/.config/scheme/lockscreen-bg \
-        -M --indicator --pointer default \
-        -k --time-str="%H:%M" --date-str="%A, %B %d" --time-size=102 --date-size=26 \
+        -i $HOME/.cache/betterlockscreen/current/wall_blur.png \
+        -M --indicator --pointer default -k \
+        --time-str="%H:%M" --time-size=102 \
         --time-font="Segoe UI Variable Static Display:style=Semibold" \
+        --time-pos="ix:iy - 142" --time-color="FFFFFFCC" \
+        --date-str="%A, %B %d" --date-size=24 \
         --date-font="Segoe UI Variable Static Display:style=Semibold" \
-        --time-pos="ix:iy - 142" --time-color="FFFFFFCC" --date-color="FFFFFFCC" \
+        --date-pos="tx:ty + 35" --date-color="FFFFFFCC" \
         --bar-indicator --bar-direction 2 --bar-color 00000000 --bar-pos "h" \
-        --bar-step 5 --bar-max-height 5 --bar-periodic-step 5 \
+        --bar-step 6 --bar-max-height 6 --bar-periodic-step 6 \
         --keyhl-color="736654CC"
 
 # Re-enables notifications when the device is unlocked

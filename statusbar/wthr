@@ -133,4 +133,4 @@ elif (sunset[0] <= curr_time_int <= sunset[1]) and (main == 'Clear'):
 elif ((night[0] <= curr_time_int <= night[1]) or (night[2] <= curr_time_int <= night[3])):
     icon = moon_curr
 
-print("{} {}° {}".format(icon, temp, main))
+print("{} {}°C".format(icon, temp))

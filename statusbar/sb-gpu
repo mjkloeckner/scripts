@@ -13,4 +13,4 @@ ctemp=$(sensors | awk '/CPU:/ {$2 = substr($2, 2, length($2) - 5); print $2}')
 # gtemp=$(sensors | awk '/edge/ {$2 = substr($2, 2, length($2) - 5); print $2}')
 
 # printf "🌡️ C$ctemp° G$gtemp°"
-printf "🌡️ $ctemp°"
+printf "🌡️ $ctemp°"C
